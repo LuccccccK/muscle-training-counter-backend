@@ -9,7 +9,9 @@ Resources:
         S3Bucket: !ImportValue MtcCfnS3ForLambda-BucketName
         S3Key: app-1.0-SNAPSHOT.jar
       FunctionName: !Sub ${AWS::StackName}-function
-      Handler: link.haba.mtc.Sample::handleRequest
+      MemorySize: 512
+      Timeout: 29
+      Handler: link.haba.mtc.MuscleTraining::handleRequest
       Role: !GetAtt
         - LambdaExecutionRole
         - Arn
@@ -41,3 +43,4 @@ Resources:
                   - logs:CreateExportTask
                   - s3:GetBucketAcl
                   - s3:PutObject
+                  - dynamodb:PutItem
