@@ -26,7 +26,7 @@
 
     ```sh
     # CAPABILITY_NAMED_IAM はIAMリソースを作成する時に明示的に指定が必要
-    aws cloudformation create-stack --stack-name MtcCfnApi --template-body file://mtc-cfn-lambda.yaml --capabilities CAPABILITY_NAMED_IAM
-    # aws cloudformation update-stack --stack-name MtcCfnApi --template-body file://mtc-cfn-lambda.yaml --capabilities CAPABILITY_NAMED_IAM
+    aws cloudformation create-stack --stack-name MtcCfnApi --template-body file://mtc-cfn-api.yaml --capabilities CAPABILITY_NAMED_IAM
+    # aws cloudformation update-stack --stack-name MtcCfnApi --template-body file://mtc-cfn-api.yaml --capabilities CAPABILITY_NAMED_IAM
     # aws cloudformation delete-stack --stack-name MtcCfnApi
     ```

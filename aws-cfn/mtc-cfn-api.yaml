@@ -9,13 +9,21 @@ Resources:
         S3Bucket: !ImportValue MtcCfnS3ForLambda-BucketName
         S3Key: app-1.0-SNAPSHOT.jar
       FunctionName: !Sub ${AWS::StackName}-function
+      Handler: link.haba.mtc.MuscleTraining::handleRequest
       MemorySize: 512
       Timeout: 29
-      Handler: link.haba.mtc.MuscleTraining::handleRequest
       Role: !GetAtt
         - LambdaExecutionRole
         - Arn
       Runtime: java8
+  # Lambda Permission for Invoke
+  PermissionForExecuteApi:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Lambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*"
   # Lambda ExecutionRole Create
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -44,3 +52,18 @@ Resources:
                   - s3:GetBucketAcl
                   - s3:PutObject
                   - dynamodb:PutItem
+  # API Gateway
+  Api:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: "api"
+      EndpointConfiguration:
+        Types: [ REGIONAL ]
+      Policy:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub ${AWS::AccountId}
+            Action: execute-api:InVoke
+            Resource: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*
