@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  # Lambda Create
+  Lambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !ImportValue MtcCfnS3ForLambda-BucketName
+        S3Key: app-1.0-SNAPSHOT.jar
+      FunctionName: !Sub ${AWS::StackName}-function
+      Handler: link.haba.mtc.Sample::handleRequest
+      Role: !GetAtt
+        - LambdaExecutionRole
+        - Arn
+      Runtime: java8
+  # Lambda ExecutionRole Create
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-function-execution-role
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ${AWS::StackName}-function-policy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Resource: "*"
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:CreateExportTask
+                  - s3:GetBucketAcl
+                  - s3:PutObject
