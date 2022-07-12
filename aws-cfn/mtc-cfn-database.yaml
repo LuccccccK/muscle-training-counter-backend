@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  # DynamoDB Create
+  DDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "muscle-training-result"
+      AttributeDefinitions:
+        -
+          AttributeName: "date"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "date"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5

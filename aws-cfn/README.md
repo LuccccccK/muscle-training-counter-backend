@@ -1,5 +1,13 @@
 # README
 
+1. DB構築
+
+    ```sh
+    aws cloudformation create-stack --stack-name MtcCfnDatabase --template-body file://mtc-cfn-database.yaml
+    # aws cloudformation update-stack --stack-name MtcCfnDatabase --template-body file://mtc-cfn-database.yaml
+    # aws cloudformation delete-stack --stack-name MtcCfnDatabase
+    ```
+
 1. Lambdaモジュール配置用のS3を構築
 
     ```sh
