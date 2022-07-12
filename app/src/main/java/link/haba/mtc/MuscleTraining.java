@@ -1,6 +1,6 @@
 package link.haba.mtc;
 
-// import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -9,12 +9,9 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
-// import software.amazon.awssdk.regions.*;
 
 import link.haba.mtc.MuscleTraining.Input;
 import link.haba.mtc.MuscleTraining.Output;
-
-// import org.json.simple.parser.*;
 
 public class MuscleTraining implements RequestHandler<Input, Output> {
 
@@ -26,35 +23,35 @@ public class MuscleTraining implements RequestHandler<Input, Output> {
   @Override
   public Output handleRequest(Input in, Context context) {
     
-    // Json ob = null;
+    Json ob = null;
     
     try {
-      // JSONParser parser = new JSONParser();
-      // ob = (Json) parser.parse(in.json);  
-      putItem(in);
+      ObjectMapper om = new ObjectMapper();
+      ob = om.readValue(in.json, Json.class);
+      putItem(ob);
     } catch (Exception e) {
-      // TODO: BadRequestを返す
-      // TODO: CloudWatchにログも出したい
+      System.err.println(e.getMessage());
     }
 
     final Output out = new Output();
     out.in = in;
-    // out.ob = ob;
+    out.ob = ob;
     
     return out;
   }
 
   // TODO: sample of dynamodb put item
-  private static void putItem(Input in) {
+  private static void putItem(Json ob) {
 
     String tableName = "muscle-training-result";
     Table table = dynamoDB.getTable(tableName);
 
     try {
       System.out.println("Adding data to " + tableName);
-      Item item = new Item().withPrimaryKey("date", in.date)
-          .withString("Category", "Amazon Web Services").withNumber("Threads", 2).withNumber("Messages", 4)
-          .withNumber("Views", 1000);
+      Item item = new Item().withPrimaryKey("date", ob.selectedDate)
+          .withNumber("countAbdominalMuscles", ob.countAbdominalMuscles)
+          .withNumber("countPushUp", ob.countPushUp)
+          .withNumber("countSquat", ob.countSquat);
       table.putItem(item);
     }
     catch (Exception e) {
@@ -70,13 +67,13 @@ public class MuscleTraining implements RequestHandler<Input, Output> {
 
   public static class Output {
     public Input in;
-    // public Json ob;
+    public Json ob;
   }
 
-  // private static class Json {
-  //   public String date;
-  //   public Integer countAbdominalMuscles;
-  //   public Integer countPushUp;
-  //   public Integer countSquat;
-  // }
+  private static class Json {
+    public String selectedDate;
+    public Integer countAbdominalMuscles;
+    public Integer countPushUp;
+    public Integer countSquat;
+  }
 }
