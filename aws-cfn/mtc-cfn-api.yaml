@@ -12,9 +12,7 @@ Resources:
       Handler: link.haba.mtc.MuscleTraining::handleRequest
       MemorySize: 512
       Timeout: 29
-      Role: !GetAtt
-        - LambdaExecutionRole
-        - Arn
+      Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: java8
   # Lambda Permission for Invoke
   PermissionForExecuteApi:
@@ -67,3 +65,21 @@ Resources:
               AWS: !Sub ${AWS::AccountId}
             Action: execute-api:InVoke
             Resource: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*
+  # API Gateway Deployment
+  Deployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref Api
+  # API Gateway Stage
+  Stage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      DeploymentId: !Ref Deployment
+      RestApiId: !Ref Api
+      StageName: "v1"
+
+Outputs:
+  ApiGatewayId:
+    Value: !Ref Api
+    Export: 
+      Name: !Sub ${AWS::StackName}-ApiGatewayId

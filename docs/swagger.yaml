@@ -9,7 +9,7 @@ tags:
 schemes:
   - "https"
 paths:
-  /version:
+  /api/version:
     post:
       tags:
         - "Version"
