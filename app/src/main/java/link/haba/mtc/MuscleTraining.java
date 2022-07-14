@@ -6,7 +6,10 @@ import link.haba.mtc.application.interactor.ResultInteractor;
 import link.haba.mtc.application.usecase.ResultUsecase;
 import link.haba.mtc.controller.IController;
 import link.haba.mtc.controller.ResultController;
+import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
+import link.haba.mtc.domain.service.IResultService;
 import link.haba.mtc.domain.service.ResultService;
+import link.haba.mtc.infrastructure.repository.MuscleTrainingCountRepo;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -35,7 +38,8 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
     // ルーティングをここで定義し、依存関係を注入（予定）
     switch (e.getPath()) {
       case "/api/result":
-        ResultService s = new ResultService();
+        IMuscleTrainingCountRepo repo = new MuscleTrainingCountRepo();
+        IResultService s = new ResultService(repo);
         ResultUsecase uc = new ResultInteractor(s);
         c = new ResultController(uc);
         
