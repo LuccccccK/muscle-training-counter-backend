@@ -1,5 +1,6 @@
 package link.haba.mtc.domain.service;
 
+import link.haba.mtc.domain.model.MuscleTrainingCount;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
 
 public class ResultService implements IResultService {
@@ -11,9 +12,8 @@ public class ResultService implements IResultService {
     }
 
     @Override
-    public void hoge() {
-        // TODO Auto-generated method stub
-        System.out.println("domain service");
-        repo.hoge();
+    public void update(MuscleTrainingCount m) {
+        System.out.println("Start: ResultService - update");
+        repo.update(m);
     }
 }

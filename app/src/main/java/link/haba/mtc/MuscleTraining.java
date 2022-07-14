@@ -2,8 +2,8 @@ package link.haba.mtc;
 
 import org.apache.http.HttpStatus;
 
-import link.haba.mtc.application.interactor.ResultInteractor;
 import link.haba.mtc.application.usecase.ResultUsecase;
+import link.haba.mtc.application.usecase.IResultUsecase;
 import link.haba.mtc.controller.IController;
 import link.haba.mtc.controller.ResultController;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
@@ -38,9 +38,9 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
     // ルーティングをここで定義し、依存関係を注入（予定）
     switch (e.getPath()) {
       case "/api/result":
-        IMuscleTrainingCountRepo repo = new MuscleTrainingCountRepo();
+        IMuscleTrainingCountRepo repo = new MuscleTrainingCountRepo(null);
         IResultService s = new ResultService(repo);
-        ResultUsecase uc = new ResultInteractor(s);
+        IResultUsecase uc = new ResultUsecase(s);
         c = new ResultController(uc);
         
     }
