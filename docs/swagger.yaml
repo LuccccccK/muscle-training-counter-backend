@@ -1,20 +1,20 @@
 swagger: "2.0"
 info:
-  description: "SwaggerとAPI Gatewayのサンプルです。"
+  description: "筋トレカウンターアプリ用のAPI"
   version: "1.0.0"
-  title: "Swagger Sample"
-basePath: "/Prod"
+  title: "api"
+basePath: "/api"
 tags:
   - name: "Version"
 schemes:
   - "https"
 paths:
-  /api/version:
+  /api/result:
     post:
       tags:
         - "Version"
-      summary: "Pythonバージョン取得"
-      description: "Lambdaで動いているPythonのバージョンを取得します。"
+      summary: "筋トレ実施結果の保存"
+      description: "筋トレ実施結果を保存します。"
       consumes:
         - "application/json"
       produces:
@@ -31,7 +31,7 @@ paths:
           default:
             statusCode: 200
         passthroughBehavior: when_no_match
-        type: aws
+        type: aws_proxy
 definitions:
   Version:
     type: "object"
