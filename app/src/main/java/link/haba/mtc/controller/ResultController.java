@@ -7,13 +7,13 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 import org.apache.http.HttpStatus;
 
-import link.haba.mtc.application.usecase.ResultUsecase;
+import link.haba.mtc.application.usecase.IResultUsecase;
 
 public class ResultController implements IController {
 
-    private ResultUsecase uc;
+    private IResultUsecase uc;
 
-    public ResultController(ResultUsecase uc) {
+    public ResultController(IResultUsecase uc) {
         this.uc = uc;
     }
 
@@ -35,7 +35,7 @@ public class ResultController implements IController {
     // Post Method
     private APIGatewayProxyResponseEvent post(APIGatewayProxyRequestEvent e) {
         // TODO: usecase 呼び出し
-        this.uc.hoge();
+        this.uc.update();
 
         // APIGatewayProxyResponseEvent の組み立て、返却
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();

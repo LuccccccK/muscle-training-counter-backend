@@ -10,11 +10,11 @@ import link.haba.mtc.domain.model.MuscleTrainingCount;
 
 public class AWSDynamoDB {
 
-  static AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
-  static DynamoDB dynamoDB = new DynamoDB(client);
+  AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
+  DynamoDB dynamoDB = new DynamoDB(client);
 
   // TODO DBへの保存とEntityの組み立てが混在しているので分離した方がよい
-  public static void putItem(String tblName, MuscleTrainingCount m) {
+  public void putItem(String tblName, MuscleTrainingCount m) {
     Table tbl = dynamoDB.getTable(tblName);
 
     try {

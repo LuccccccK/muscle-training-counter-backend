@@ -9,6 +9,7 @@ import link.haba.mtc.controller.ResultController;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
 import link.haba.mtc.domain.service.IResultService;
 import link.haba.mtc.domain.service.ResultService;
+import link.haba.mtc.infrastructure.AWSDynamoDB;
 import link.haba.mtc.infrastructure.repository.MuscleTrainingCountRepo;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -38,7 +39,8 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
     // ルーティングをここで定義し、依存関係を注入（予定）
     switch (e.getPath()) {
       case "/api/result":
-        IMuscleTrainingCountRepo repo = new MuscleTrainingCountRepo(null);
+        AWSDynamoDB db = new AWSDynamoDB();
+        IMuscleTrainingCountRepo repo = new MuscleTrainingCountRepo(db);
         IResultService s = new ResultService(repo);
         IResultUsecase uc = new ResultUsecase(s);
         c = new ResultController(uc);

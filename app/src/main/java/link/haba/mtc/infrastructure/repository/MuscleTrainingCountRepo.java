@@ -15,7 +15,6 @@ public class MuscleTrainingCountRepo implements IMuscleTrainingCountRepo {
     @Override
     public void update(MuscleTrainingCount m) {
         System.out.println("Start: MuscleTrainingCountRepo - update");
-        // TODO: DB更新処理
+        db.putItem("muscle-training-result", m);
     }
-    
 }
