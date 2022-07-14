@@ -11,19 +11,14 @@ public class ResultUsecase implements IResultUsecase {
         this.s = s;
     }
     
-    public void update() {
+    public void update(MuscleTrainingCount m) {
         System.out.println("Start: ResultUsecase - update");
-        MuscleTrainingCount m = new MuscleTrainingCount();
-        m.selectedDate = "2022-07-13";
-        m.countAbdominalMuscles = 10;
-        m.countPushUp = 16;
-        m.countSquat = 10;
         s.update(m);
     }
 
     @Override
-    public void regist() {
-        // TODO Auto-generated method stub
+    public void regist(MuscleTrainingCount m) {
+        System.out.println("Start: ResultUsecase - regist");
         
     }
 }

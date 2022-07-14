@@ -16,4 +16,10 @@ public class ResultService implements IResultService {
         System.out.println("Start: ResultService - update");
         repo.update(m);
     }
+
+    @Override
+    public void regist(MuscleTrainingCount m) {
+        System.out.println("Start: ResultService - regist");
+        repo.regist(m);
+    }
 }

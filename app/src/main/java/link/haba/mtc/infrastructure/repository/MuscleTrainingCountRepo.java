@@ -17,4 +17,10 @@ public class MuscleTrainingCountRepo implements IMuscleTrainingCountRepo {
         System.out.println("Start: MuscleTrainingCountRepo - update");
         db.putItem("muscle-training-result", m);
     }
+
+    @Override
+    public void regist(MuscleTrainingCount m) {
+        System.out.println("Start: MuscleTrainingCountRepo - regist");
+        db.putItem("muscle-training-result", m);
+    }
 }

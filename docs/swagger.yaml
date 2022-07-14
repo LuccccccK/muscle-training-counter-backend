@@ -12,7 +12,7 @@ paths:
   /api/result:
     post:
       tags:
-        - "Version"
+        - "result"
       summary: "筋トレ実施結果の保存"
       description: "筋トレ実施結果を保存します。"
       consumes:
@@ -23,7 +23,33 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Version"
+            $ref: "#/definitions/result"
+        400:
+          description: "入力パラメータの誤り"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
+        responses:
+          default:
+            statusCode: 200
+        passthroughBehavior: when_no_match
+        type: aws_proxy
+    put:
+      tags:
+        - "result"
+      summary: "筋トレ実施結果の保存"
+      description: "筋トレ実施結果を保存します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/result"
+        400:
+          description: "入力パラメータの誤り"
       x-amazon-apigateway-integration:
         httpMethod: "POST"
         uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
@@ -33,7 +59,7 @@ paths:
         passthroughBehavior: when_no_match
         type: aws_proxy
 definitions:
-  Version:
+  result:
     type: "object"
     required:
       - "python"
