@@ -2,6 +2,8 @@ package link.haba.mtc;
 
 import org.apache.http.HttpStatus;
 
+import link.haba.mtc.application.interactor.ResultInteractor;
+import link.haba.mtc.application.usecase.ResultUsecase;
 import link.haba.mtc.controller.IController;
 import link.haba.mtc.controller.ResultController;
 
@@ -32,7 +34,8 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
     // ルーティングをここで定義し、依存関係を注入（予定）
     switch (e.getPath()) {
       case "/api/result":
-        c = new ResultController();
+        ResultUsecase uc = new ResultInteractor();
+        c = new ResultController(uc);
         
     }
 

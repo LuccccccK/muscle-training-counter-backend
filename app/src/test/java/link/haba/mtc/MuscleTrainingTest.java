@@ -8,6 +8,8 @@ import com.amazonaws.services.lambda.runtime.ClientContext;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 
 /**
  * Unit test for simple App.
@@ -16,18 +18,16 @@ public class MuscleTrainingTest
 {
     @Test
     public void testHandleRequest() {
-        // MuscleTraining mt = new MuscleTraining();
+        MuscleTraining mt = new MuscleTraining();
+        
+        APIGatewayProxyRequestEvent e = new APIGatewayProxyRequestEvent();
+        e.setPath("/api/result");
+        e.setHttpMethod("POST");
 
-        // TODO DynamoDBに接続できず必ずエラーとなってしまうため、テストメソッドは必ずtrueとなるように仮実装
-        //      DynamoDBをローカル検証できるように対応が必要
         Context ctx = createContext();
-        assertEquals(null, ctx.getAwsRequestId());
-
-        // Input in = new Input();
-        // in.date = "2022-07-12";
-        // in.json = "{\"selectedDate\":\"2022-07-12\",\"countPushUp\":3,\"countAbdominalMuscles\":0,\"countSquat\":0}";
-        // Output out = mt.handleRequest(in, createContext());
-        // assertEquals(in.date, out.in.date);
+        
+        APIGatewayProxyResponseEvent res = mt.handleRequest(e, ctx);
+        assertEquals("{\"test\": \"body\"}", res.getBody());
     }
 
     private Context createContext() {

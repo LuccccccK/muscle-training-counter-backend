@@ -7,7 +7,15 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 import org.apache.http.HttpStatus;
 
+import link.haba.mtc.application.usecase.ResultUsecase;
+
 public class ResultController implements IController {
+
+    private ResultUsecase uc;
+
+    public ResultController(ResultUsecase uc) {
+        this.uc = uc;
+    }
 
     @Override
     public APIGatewayProxyResponseEvent handle(APIGatewayProxyRequestEvent e) {
@@ -26,6 +34,10 @@ public class ResultController implements IController {
     
     // Post Method
     private APIGatewayProxyResponseEvent post(APIGatewayProxyRequestEvent e) {
+        // TODO: usecase 呼び出し
+        this.uc.hoge();
+
+        // APIGatewayProxyResponseEvent の組み立て、返却
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
         response.setIsBase64Encoded(false);
         response.setStatusCode(200);
