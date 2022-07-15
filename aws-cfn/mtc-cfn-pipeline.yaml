@@ -11,6 +11,11 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: s3-mtc-lambda-lifecycle-rule
+            Status: Enabled
+            ExpirationInDays: 3
   # S3 Bucket Policy Create
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
@@ -22,7 +27,7 @@ Resources:
             Effect: Allow
             Action: 's3:GetObject'
             Principal:
-              AWS: '*'
+              AWS: !Sub ${AWS::AccountId}
             Resource: !Sub arn:aws:s3:::${S3BucketForLambda}/*
   # CI/CD IAM Role for CodeBuild Create
   CodeBuildRole:

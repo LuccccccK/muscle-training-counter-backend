@@ -11,15 +11,9 @@
 1. Lambdaモジュール配置用のS3を構築
 
     ```sh
-    aws cloudformation create-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-pipeline.yaml --capabilities CAPABILITY_NAMED_IAM
-    # aws cloudformation update-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-pipeline.yaml --capabilities CAPABILITY_NAMED_IAM
-    # aws cloudformation delete-stack --stack-name MtcCfnS3ForLambda
-    ```
-
-1. Lambdaモジュールをアップロード
-
-    ```sh
-    aws s3 cp ../app/target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
+    aws cloudformation create-stack --stack-name MtcCfnPipeline --template-body file://mtc-cfn-pipeline.yaml --capabilities CAPABILITY_NAMED_IAM
+    # aws cloudformation update-stack --stack-name MtcCfnPipeline --template-body file://mtc-cfn-pipeline.yaml --capabilities CAPABILITY_NAMED_IAM
+    # aws cloudformation delete-stack --stack-name MtcCfnPipeline
     ```
 
 1. Lambdaを構築

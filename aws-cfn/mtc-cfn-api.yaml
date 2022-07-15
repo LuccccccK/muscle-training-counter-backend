@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Code:
-        S3Bucket: !ImportValue MtcCfnS3ForLambda-BucketName
+        S3Bucket: !ImportValue MtcCfnPipeline-BucketName
         S3Key: app-1.0-SNAPSHOT.jar
       FunctionName: !Sub ${AWS::StackName}-function
       Handler: link.haba.mtc.MuscleTraining::handleRequest
