@@ -11,8 +11,8 @@
 1. Lambdaモジュール配置用のS3を構築
 
     ```sh
-    aws cloudformation create-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-s3-for-lambda.yaml
-    # aws cloudformation update-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-s3-for-lambda.yaml
+    aws cloudformation create-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-s3-for-lambda.yaml --capabilities CAPABILITY_NAMED_IAM
+    # aws cloudformation update-stack --stack-name MtcCfnS3ForLambda --template-body file://mtc-cfn-s3-for-lambda.yaml --capabilities CAPABILITY_NAMED_IAM
     # aws cloudformation delete-stack --stack-name MtcCfnS3ForLambda
     ```
 
