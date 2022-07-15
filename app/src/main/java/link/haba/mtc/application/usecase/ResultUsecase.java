@@ -19,6 +19,6 @@ public class ResultUsecase implements IResultUsecase {
     @Override
     public void regist(MuscleTrainingCount m) {
         System.out.println("Start: ResultUsecase - regist");
-        
+        s.regist(m);
     }
 }
