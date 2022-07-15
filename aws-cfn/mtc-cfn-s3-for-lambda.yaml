@@ -57,10 +57,6 @@ Resources:
                 Resource:
                   - !Sub arn:aws:s3:::${S3BucketForLambda}
                   - !Sub arn:aws:s3:::${S3BucketForLambda}/*
-              - Sid: CloudFormationAccess
-                Effect: Allow
-                Action: cloudformation:ValidateTemplate
-                Resource: "*"
   # CI/CD CodeBuild Create
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
@@ -72,7 +68,7 @@ Resources:
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/ubuntu-base:14.04
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:3.0
         EnvironmentVariables:
           - Name: S3_BUCKET
             Value: !Ref S3BucketForLambda
@@ -139,10 +135,10 @@ Resources:
               #     - iam:PassRole
               #   Resource: !GetAtt PipelineDeployRole.Arn
   # CI/CD CodePipeline Create
-  PipelineProd:
+  Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
-      Name: pipeline-module
+      Name: pipeline-muscle-training-counter-backend
       RoleArn: !GetAtt PipelineRole.Arn
       ArtifactStore:
         Type: S3
@@ -160,7 +156,7 @@ Resources:
                 FullRepositoryId: "LuccccccK/muscle-training-counter-backend"
                 ConnectionArn: !Sub arn:aws:codestar-connections:${AWS::Region}:${AWS::AccountId}:connection/283445ef-8622-4a01-8795-8b714828d95b
                 BranchName: "main"
-                DetectChanges: "false"
+                DetectChanges: "true"
               OutputArtifacts:
                 - Name: SourceOutput
         - Name: Build

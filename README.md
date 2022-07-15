@@ -10,7 +10,7 @@
 ```sh
 mvn clean
 mvn package
-aws s3 cp ../app/target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
+aws s3 cp target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
 # 管理コンソール上でLambda関数を更新
 ```
 
