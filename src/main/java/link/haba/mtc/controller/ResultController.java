@@ -22,6 +22,8 @@ public class ResultController implements IController {
     @Override
     public APIGatewayProxyResponseEvent handle(APIGatewayProxyRequestEvent e) {
         switch (e.getHttpMethod()) {
+            case "GET":
+                return this.get(e);
             case "POST":
                 return this.post(e);
             case "PUT":
@@ -35,14 +37,20 @@ public class ResultController implements IController {
                 return response;
         }
     }
+
+    // Get Method
+    private APIGatewayProxyResponseEvent get(APIGatewayProxyRequestEvent e) {
+        APIGatewayProxyResponseEvent response = this.initializeResponse();
+
+        // TODO: Resultの取得処理を実装
+
+        response.setStatusCode(HttpStatus.SC_OK);
+        return response;
+    }
     
     // Post Method
     private APIGatewayProxyResponseEvent post(APIGatewayProxyRequestEvent e) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        response.setIsBase64Encoded(false);
-        HashMap<String, String> headers = new HashMap<String, String>();
-        headers.put("Content-Type", "application/json");
-        response.setHeaders(headers);
+        APIGatewayProxyResponseEvent response = this.initializeResponse();
 
         String b = e.getBody();
         if (b == "") {
@@ -65,12 +73,8 @@ public class ResultController implements IController {
 
     // Put Method
     private APIGatewayProxyResponseEvent put(APIGatewayProxyRequestEvent e) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        response.setIsBase64Encoded(false);
-        HashMap<String, String> headers = new HashMap<String, String>();
-        headers.put("Content-Type", "application/json");
-        response.setHeaders(headers);
-
+        APIGatewayProxyResponseEvent response = this.initializeResponse();
+        
         String b = e.getBody();
         if (b == "") {
             System.err.println("リクエストボディが取得できませんでした");
@@ -87,6 +91,16 @@ public class ResultController implements IController {
             System.err.println("MuscleTrainingCount object への Parseに失敗しました");
             response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
         }
+        return response;
+    }
+
+    // APIGatewayProxyResponseEvent を初期化して返します
+    private APIGatewayProxyResponseEvent initializeResponse() {
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+        response.setIsBase64Encoded(false);
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        response.setHeaders(headers);
         return response;
     }
 }
