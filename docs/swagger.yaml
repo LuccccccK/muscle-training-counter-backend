@@ -10,6 +10,28 @@ schemes:
   - "https"
 paths:
   /api/result:
+    get:
+      tags:
+        - "result"
+      summary: "筋トレ実施結果の取得"
+      description: "筋トレ実施結果を取得します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/result"
+      x-amazon-apigateway-integration:
+        httpMethod: "GET"
+        uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
+        responses:
+          default:
+            statusCode: 200
+        passthroughBehavior: when_no_match
+        type: aws_proxy
     post:
       tags:
         - "result"
@@ -51,7 +73,7 @@ paths:
         400:
           description: "入力パラメータの誤り"
       x-amazon-apigateway-integration:
-        httpMethod: "POST"
+        httpMethod: "PUT"
         uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
         responses:
           default:

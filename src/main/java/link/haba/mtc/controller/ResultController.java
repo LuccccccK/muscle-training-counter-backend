@@ -43,6 +43,7 @@ public class ResultController implements IController {
         APIGatewayProxyResponseEvent response = this.initializeResponse();
 
         // TODO: Resultの取得処理を実装
+        this.uc.get("2022-07-11");
 
         response.setStatusCode(HttpStatus.SC_OK);
         return response;
