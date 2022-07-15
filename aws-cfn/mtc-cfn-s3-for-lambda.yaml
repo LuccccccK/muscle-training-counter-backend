@@ -78,7 +78,7 @@ Resources:
             Value: !Ref S3BucketForLambda
       Source:
         Type: CODEPIPELINE
-        BuildSpec: app/buildspec.yaml
+        BuildSpec: buildspec.yaml
   # CI/CD CodePipeline Role Create
   PipelineRole:
     Type: AWS::IAM::Role
