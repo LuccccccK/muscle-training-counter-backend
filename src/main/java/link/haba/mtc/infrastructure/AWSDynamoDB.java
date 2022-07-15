@@ -13,6 +13,14 @@ public class AWSDynamoDB {
   AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
   DynamoDB dynamoDB = new DynamoDB(client);
 
+  // Primary Key を指定して、値を取得します
+  public String getItem(String tblName, String pkname, String pkvalue) {
+    Table tbl = dynamoDB.getTable(tblName);
+
+    Item i = tbl.getItem(pkname, pkvalue);
+    return i.toJSON();
+  }
+
   // TODO DBへの保存とEntityの組み立てが混在しているので分離した方がよい
   public void putItem(String tblName, MuscleTrainingCount m) {
     Table tbl = dynamoDB.getTable(tblName);
