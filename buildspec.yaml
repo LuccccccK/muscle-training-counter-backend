@@ -7,10 +7,12 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
+      - java -version
       - mvn clean
   build:
     commands:
       - echo Build started on `date`
+      - java -version
       - mvn package
   post_build:
     commands:

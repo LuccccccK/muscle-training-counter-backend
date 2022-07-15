@@ -44,7 +44,6 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
         IResultService s = new ResultService(repo);
         IResultUsecase uc = new ResultUsecase(s);
         c = new ResultController(uc);
-        
     }
 
     // リソースが未定義の場合は、Not Found ステータスを返して終了
