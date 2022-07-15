@@ -101,6 +101,9 @@ public class ResultController implements IController {
         response.setIsBase64Encoded(false);
         HashMap<String, String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
+        headers.put("Access-Control-Allow-Headers", "Content-Type");
+        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         response.setHeaders(headers);
         return response;
     }

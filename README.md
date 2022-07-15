@@ -20,3 +20,8 @@ aws s3 cp target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
 curl -X GET -H "Content-Type: application/json" https://mtc.haba.link/api/result
 curl -X POST -d @muscle-training-count.json -H "Content-Type: application/json" https://mtc.haba.link/api/result
 ```
+
+## Others
+
+- CORS対策
+  - `https://blog.mori-soft.com/entry/2018/08/24/133304`
