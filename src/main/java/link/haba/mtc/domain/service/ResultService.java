@@ -1,6 +1,7 @@
 package link.haba.mtc.domain.service;
 
 import link.haba.mtc.domain.model.MuscleTrainingCount;
+import link.haba.mtc.domain.model.entity.MuscleTrainingCountEntity;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
 
 public class ResultService implements IResultService {
@@ -26,6 +27,7 @@ public class ResultService implements IResultService {
     @Override
     public MuscleTrainingCount get(String date) {
         System.out.println("Start: ResultService - get");
-        return repo.get(date);
+        MuscleTrainingCountEntity entity = repo.get(date);
+        return new MuscleTrainingCount(entity);
     }
 }

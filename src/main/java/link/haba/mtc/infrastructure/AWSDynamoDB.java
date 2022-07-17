@@ -14,6 +14,7 @@ public class AWSDynamoDB {
   DynamoDB dynamoDB = new DynamoDB(client);
 
   // Primary Key を指定して、値を取得します
+  // レコードが存在しない場合、NullPointerExeptionが発生します
   public String getItem(String tblName, String pkname, String pkvalue) {
     Table tbl = dynamoDB.getTable(tblName);
 
