@@ -13,6 +13,22 @@ Resources:
       Subscription:
         - Endpoint: !Ref MailAddress
           Protocol: email
+  # CI/CD SNS Topic Policy Create for CodePipeline
+  SNSTopicPolicyNotificationCICD:
+    Type: AWS::SNS::TopicPolicy
+    Properties: 
+      PolicyDocument: 
+        Version: '2008-10-17'
+        Statement:
+        - Sid: AWSCodeStarNotifications_publish
+          Effect: Allow
+          Principal: 
+            Service: codestar-notifications.amazonaws.com
+          Action:
+            - SNS:Publish
+          Resource: !Ref SNSTopicNotificationCICD
+      Topics: 
+        - !Ref SNSTopicNotificationCICD
 
 Outputs:
   SNSTopicName:
