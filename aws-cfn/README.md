@@ -8,7 +8,16 @@
     # aws cloudformation delete-stack --stack-name MtcCfnDatabase
     ```
 
-1. Lambdaモジュール配置用のS3を構築
+1. SNSトピックを作成
+
+    ```sh
+    # Pipeline環境を構築する際に、トピックを作成しておかないとエラーになるため、別スタックとして先行作成
+    aws cloudformation create-stack --stack-name MtcCfnSns --template-body file://mtc-cfn-sns.yaml --parameters ParameterKey=MailAddress,ParameterValue=xxx@gmail.com
+    # aws cloudformation update-stack --stack-name MtcCfnSns --template-body file://mtc-cfn-sns.yaml --parameters ParameterKey=MailAddress,ParameterValue=xxx@gmail.com
+    # aws cloudformation delete-stack --stack-name MtcCfnSns
+    ```
+
+1. Pipeline環境を構築
 
     ```sh
     aws cloudformation create-stack --stack-name MtcCfnPipeline --template-body file://mtc-cfn-pipeline.yaml --capabilities CAPABILITY_NAMED_IAM

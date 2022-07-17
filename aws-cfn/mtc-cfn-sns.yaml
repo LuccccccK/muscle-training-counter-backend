@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  MailAddress:
+    Type: String
+
+Resources:
+  # CI/CD SNS Topic Create for CodePipeline
+  SNSTopicNotificationCICD:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: sns-topic-notify-sms-for-pipeline
+      Subscription:
+        - Endpoint: !Ref MailAddress
+          Protocol: email
+
+Outputs:
+  SNSTopicName:
+    Value: !Ref SNSTopicNotificationCICD
+    Export: 
+      Name: !Sub ${AWS::StackName}-SNSTopicName
