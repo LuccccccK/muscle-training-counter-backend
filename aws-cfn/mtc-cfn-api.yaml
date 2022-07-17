@@ -49,6 +49,7 @@ Resources:
                   - logs:CreateExportTask
                   - s3:GetBucketAcl
                   - s3:PutObject
+                  - dynamodb:GetItem
                   - dynamodb:PutItem
   # API Gateway
   Api:

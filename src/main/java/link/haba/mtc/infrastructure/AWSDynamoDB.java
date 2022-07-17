@@ -17,8 +17,13 @@ public class AWSDynamoDB {
   public String getItem(String tblName, String pkname, String pkvalue) {
     Table tbl = dynamoDB.getTable(tblName);
 
-    Item i = tbl.getItem(pkname, pkvalue);
-    return i.toJSON();
+    try {
+      Item i = tbl.getItem(pkname, pkvalue);
+      return i.toJSON();  
+    } catch (Exception e) {
+      System.err.println("Failed to get item in " + tbl.getTableName());
+      return "";
+    }
   }
 
   // TODO DBへの保存とEntityの組み立てが混在しているので分離した方がよい
