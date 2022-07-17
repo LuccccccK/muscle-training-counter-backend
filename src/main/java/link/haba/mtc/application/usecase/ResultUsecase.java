@@ -23,8 +23,8 @@ public class ResultUsecase implements IResultUsecase {
     }
 
     @Override
-    public void get(String date) {
+    public MuscleTrainingCount get(String date) {
         System.out.println("Start: ResultUsecase - get");
-        s.get(date);
+        return s.get(date);
     }
 }

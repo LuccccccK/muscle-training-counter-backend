@@ -44,9 +44,17 @@ public class ResultController implements IController {
         APIGatewayProxyResponseEvent response = this.initializeResponse();
 
         Map<String, String> q = e.getQueryStringParameters();
-        this.uc.get(q.get("selectedDate"));
+        MuscleTrainingCount m = this.uc.get(q.get("selectedDate"));
 
-        response.setStatusCode(HttpStatus.SC_OK);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(m);
+            response.setBody(json);
+            response.setStatusCode(HttpStatus.SC_OK);
+        } catch (Exception ex) {
+            System.err.println("Class Object を JSON 文字列に変換できませんでした");
+            response.setStatusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        }
         return response;
     }
     
