@@ -1,6 +1,7 @@
 package link.haba.mtc.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
@@ -42,8 +43,8 @@ public class ResultController implements IController {
     private APIGatewayProxyResponseEvent get(APIGatewayProxyRequestEvent e) {
         APIGatewayProxyResponseEvent response = this.initializeResponse();
 
-        // TODO: Resultの取得処理を実装
-        this.uc.get("2022-07-11");
+        Map<String, String> q = e.getQueryStringParameters();
+        this.uc.get(q.get("selectedDate"));
 
         response.setStatusCode(HttpStatus.SC_OK);
         return response;

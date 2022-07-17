@@ -22,4 +22,10 @@ public class ResultService implements IResultService {
         System.out.println("Start: ResultService - regist");
         repo.regist(m);
     }
+
+    @Override
+    public MuscleTrainingCount get(String date) {
+        System.out.println("Start: ResultService - get");
+        return repo.get(date);
+    }
 }

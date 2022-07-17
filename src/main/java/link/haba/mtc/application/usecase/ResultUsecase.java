@@ -25,5 +25,6 @@ public class ResultUsecase implements IResultUsecase {
     @Override
     public void get(String date) {
         System.out.println("Start: ResultUsecase - get");
+        s.get(date);
     }
 }
