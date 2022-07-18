@@ -71,7 +71,11 @@ public class ResultController implements IController {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            MuscleTrainingCount m = objectMapper.readValue(b, MuscleTrainingCount.class);
+            ResultPostModel rpm = objectMapper.readValue(b, ResultPostModel.class);
+            MuscleTrainingCount m = new MuscleTrainingCount(rpm.selectedDate);
+            m.countAbdominalMuscles = rpm.countAbdominalMuscles;
+            m.countPushUp = rpm.countPushUp;
+            m.countSquat = rpm.countSquat;
             this.uc.regist(m);
             response.setStatusCode(HttpStatus.SC_OK);
         } catch (Exception ex) {
@@ -115,5 +119,13 @@ public class ResultController implements IController {
         headers.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         response.setHeaders(headers);
         return response;
+    }
+
+    // Result Controller Post Model
+    private class ResultPostModel {
+        public String selectedDate;
+        public Integer countAbdominalMuscles;
+        public Integer countPushUp;
+        public Integer countSquat;
     }
 }
