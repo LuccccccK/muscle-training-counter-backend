@@ -62,6 +62,11 @@ Resources:
                 Resource:
                   - !Sub arn:aws:s3:::${S3BucketForLambda}
                   - !Sub arn:aws:s3:::${S3BucketForLambda}/*
+              - Sid: LambdaUpdate
+                Effect: Allow
+                Action: lambda:UpdateFunctionCode 
+                Resource:
+                  - !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*
   # CI/CD CodeBuild Create
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
