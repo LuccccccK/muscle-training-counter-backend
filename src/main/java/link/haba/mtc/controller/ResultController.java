@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 
 import link.haba.mtc.application.usecase.IResultUsecase;
+import link.haba.mtc.controller.input.ResultPostInput;
 import link.haba.mtc.domain.model.MuscleTrainingCount;
 
 public class ResultController implements IController {
@@ -71,11 +72,11 @@ public class ResultController implements IController {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            ResultPostModel rpm = objectMapper.readValue(b, ResultPostModel.class);
-            MuscleTrainingCount m = new MuscleTrainingCount(rpm.selectedDate);
-            m.countAbdominalMuscles = rpm.countAbdominalMuscles;
-            m.countPushUp = rpm.countPushUp;
-            m.countSquat = rpm.countSquat;
+            ResultPostInput rpi = objectMapper.readValue(b, ResultPostInput.class);
+            MuscleTrainingCount m = new MuscleTrainingCount(rpi.selectedDate);
+            m.countAbdominalMuscles = rpi.countAbdominalMuscles;
+            m.countPushUp = rpi.countPushUp;
+            m.countSquat = rpi.countSquat;
             this.uc.regist(m);
             response.setStatusCode(HttpStatus.SC_OK);
         } catch (Exception ex) {
@@ -119,13 +120,5 @@ public class ResultController implements IController {
         headers.put("Access-Control-Allow-Methods", "OPTIONS,POST,GET");
         response.setHeaders(headers);
         return response;
-    }
-
-    // Result Controller Post Model
-    private class ResultPostModel {
-        public String selectedDate;
-        public Integer countAbdominalMuscles;
-        public Integer countPushUp;
-        public Integer countSquat;
     }
 }
