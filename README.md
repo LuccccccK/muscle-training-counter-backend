@@ -12,12 +12,13 @@ mvn clean
 mvn package
 aws s3 cp target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
 # 管理コンソール上でLambda関数を更新
+aws lambda update-function-code --function-name MtcCfnApi-function --s3-bucket s3-mtc-lambda --s3-key target/app-1.0-SNAPSHOT.jar
 ```
 
 ## Test
 
 ```sh
-curl -X GET -H "Content-Type: application/json" https://mtc.haba.link/api/result
+curl -X GET -H "Content-Type: application/json" "https://mtc.haba.link/api/result?selectedDate=2022-07-16"
 curl -X POST -d @muscle-training-count.json -H "Content-Type: application/json" https://mtc.haba.link/api/result
 ```
 

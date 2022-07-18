@@ -7,16 +7,13 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
-      - java -version
       - mvn clean
   build:
     commands:
       - echo Build started on `date`
-      - java -version
       - mvn package
+      - aws s3 cp target/app-1.0-SNAPSHOT.jar s3://s3-mtc-lambda/
   post_build:
     commands:
       - echo Build completed on `date`
-artifacts:
-  files:
-    - target/app-1.0-SNAPSHOT.jar
+      - aws lambda update-function-code --function-name MtcCfnApi-function --s3-bucket s3-mtc-lambda --s3-key app-1.0-SNAPSHOT.jar

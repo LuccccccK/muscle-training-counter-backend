@@ -174,23 +174,23 @@ Resources:
                 Provider: CodeBuild
                 Owner: AWS
                 Version: "1"
-              OutputArtifacts:
-                - Name: BuildOutput
+              # OutputArtifacts:
+              #   - Name: BuildOutput
               Configuration:
                 ProjectName: !Ref CodeBuildProject
-        - Name: Deploy
-          Actions:
-            - Name: DeployS3
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Provider: S3
-                Version: '1'
-              InputArtifacts:
-                - Name: BuildOutput
-              Configuration:
-                BucketName: !Ref S3BucketForLambda
-                Extract: 'true'
+        # - Name: Deploy
+        #   Actions:
+        #     - Name: DeployS3
+        #       ActionTypeId:
+        #         Category: Deploy
+        #         Owner: AWS
+        #         Provider: S3
+        #         Version: '1'
+        #       InputArtifacts:
+        #         - Name: BuildOutput
+        #       Configuration:
+        #         BucketName: !Ref S3BucketForLambda
+        #         Extract: 'true'
   # CI/CD CodePipeline Notification Create
   PipelineNotificationRule:
     Type: AWS::CodeStarNotifications::NotificationRule
