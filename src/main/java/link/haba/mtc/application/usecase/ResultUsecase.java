@@ -25,6 +25,10 @@ public class ResultUsecase implements IResultUsecase {
     @Override
     public MuscleTrainingCount get(String date) {
         System.out.println("Start: ResultUsecase - get");
-        return s.get(date);
+        MuscleTrainingCount m = s.get(date);
+        if (m == null) {
+            return new MuscleTrainingCount(date);
+        }
+        return m;
     }
 }

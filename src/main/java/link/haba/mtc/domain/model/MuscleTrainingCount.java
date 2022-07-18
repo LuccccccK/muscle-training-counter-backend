@@ -8,6 +8,13 @@ public class MuscleTrainingCount {
     public Integer countAbdominalMuscles;
     public Integer countPushUp;
     public Integer countSquat;
+    
+    public MuscleTrainingCount(String date) {
+        this.selectedDate = date;
+        this.countAbdominalMuscles = 0;
+        this.countPushUp = 0;
+        this.countSquat = 0;
+    }
 
     public MuscleTrainingCount(MuscleTrainingCountEntity e) {
         this.selectedDate = e.date;

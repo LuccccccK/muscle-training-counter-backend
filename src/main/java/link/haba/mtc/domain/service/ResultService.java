@@ -28,6 +28,9 @@ public class ResultService implements IResultService {
     public MuscleTrainingCount get(String date) {
         System.out.println("Start: ResultService - get");
         MuscleTrainingCountEntity entity = repo.get(date);
+        if (entity == null) {
+            return null;
+        }
         return new MuscleTrainingCount(entity);
     }
 }

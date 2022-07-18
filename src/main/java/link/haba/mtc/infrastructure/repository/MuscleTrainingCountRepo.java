@@ -39,7 +39,7 @@ public class MuscleTrainingCountRepo implements IMuscleTrainingCountRepo {
         } catch (Exception e) {
             System.err.println("MuscleTrainingCount object への Parseに失敗しました");
             System.err.println("取得結果： " + json);
-            return new MuscleTrainingCountEntity();
+            return null;
         }
     }
 }
