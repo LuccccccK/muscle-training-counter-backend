@@ -4,6 +4,7 @@ import org.apache.http.HttpStatus;
 
 import link.haba.mtc.application.usecase.ResultUsecase;
 import link.haba.mtc.application.usecase.IResultUsecase;
+import link.haba.mtc.controller.HealthController;
 import link.haba.mtc.controller.IController;
 import link.haba.mtc.controller.ResultController;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
@@ -44,6 +45,8 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
         IResultService s = new ResultService(repo);
         IResultUsecase uc = new ResultUsecase(s);
         c = new ResultController(uc);
+      case "/api/health": 
+        c = new HealthController();
     }
 
     // リソースが未定義の場合は、Not Found ステータスを返して終了
