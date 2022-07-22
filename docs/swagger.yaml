@@ -23,7 +23,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/result"
+            $ref: "#/definitions/resultGetOutput"
       x-amazon-apigateway-integration:
         httpMethod: "POST"
         uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
@@ -44,8 +44,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/result"
         400:
           description: "入力パラメータの誤り"
       x-amazon-apigateway-integration:
@@ -68,8 +66,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/result"
         400:
           description: "入力パラメータの誤り"
       x-amazon-apigateway-integration:
@@ -82,7 +78,62 @@ paths:
         type: aws_proxy
     options:
       tags:
-        - CORS
+        - "result"
+      summary: CORS support
+      description: Enable CORS by returning correct headers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: >-
+                'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        type: mock
+  /api/summary:
+    get:
+      tags:
+        - "summary"
+      summary: "筋トレ実施結果のサマリ取得"
+      description: "筋トレ実施結果のサマリを取得します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/summaryGetOutput"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
+        responses:
+          default:
+            statusCode: 200
+        passthroughBehavior: when_no_match
+        type: aws_proxy
+    options:
+      tags:
+        - "summary"
       summary: CORS support
       description: Enable CORS by returning correct headers
       consumes:
@@ -125,8 +176,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/result"
       x-amazon-apigateway-integration:
         httpMethod: "POST"
         uri: arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:530421169424:function:MtcCfnApi-function/invocations
@@ -138,10 +187,29 @@ paths:
 
 # definitions
 definitions:
-  result:
+  resultGetOutput:
     type: "object"
     required:
-      - "python"
+      - "selectedDate"
     properties:
-      python:
+      selectedDate:
         type: "string"
+      sumAbdominalMuscles:
+        type: "integer"
+      sumPushUp:
+        type: "integer"
+      sumSquat:
+        type: "integer"
+  summaryGetOutput:
+    type: "object"
+    required:
+      - "ym"
+    properties:
+      ym:
+        type: "string"
+      sumAbdominalMuscles:
+        type: "integer"
+      sumPushUp:
+        type: "integer"
+      sumSquat:
+        type: "integer"
