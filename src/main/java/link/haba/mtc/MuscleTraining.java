@@ -7,6 +7,7 @@ import link.haba.mtc.application.usecase.IResultUsecase;
 import link.haba.mtc.controller.HealthController;
 import link.haba.mtc.controller.IController;
 import link.haba.mtc.controller.ResultController;
+import link.haba.mtc.controller.SummaryController;
 import link.haba.mtc.domain.repository.IMuscleTrainingCountRepo;
 import link.haba.mtc.domain.service.IResultService;
 import link.haba.mtc.domain.service.ResultService;
@@ -45,6 +46,9 @@ public class MuscleTraining implements RequestHandler<APIGatewayProxyRequestEven
         IResultService s = new ResultService(repo);
         IResultUsecase uc = new ResultUsecase(s);
         c = new ResultController(uc);
+        break;
+      case "/api/summary":
+        c = new SummaryController();
         break;
       case "/api/health": 
         c = new HealthController();
