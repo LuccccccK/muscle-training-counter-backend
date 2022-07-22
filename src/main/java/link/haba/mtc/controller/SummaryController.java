@@ -1,5 +1,6 @@
 package link.haba.mtc.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.http.HttpStatus;
@@ -8,7 +9,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import link.haba.mtc.controller.output.SummaryGetOutput;
+import link.haba.mtc.domain.model.MuscleTrainingCount;
 
 public class SummaryController implements IController {
 
@@ -32,15 +33,23 @@ public class SummaryController implements IController {
         APIGatewayProxyResponseEvent response = this.initializeResponse();
 
         // Map<String, String> q = e.getQueryStringParameters();
-        SummaryGetOutput o = new SummaryGetOutput();
-        o.ym = "2022-07";
-        o.sumAbdominalMuscles = 100;
-        o.sumPushUp = 200;
-        o.sumSquat = 300;
+        MuscleTrainingCount o = new MuscleTrainingCount("2022-07-20");
+        o.countAbdominalMuscles = 100;
+        o.countPushUp = 200;
+        o.countSquat = 300;
+
+        MuscleTrainingCount o2 = new MuscleTrainingCount("2022-07-21");
+        o.countAbdominalMuscles = 1;
+        o.countPushUp = 2;
+        o.countSquat = 3;
+
+        ArrayList<MuscleTrainingCount> hoge = new ArrayList<MuscleTrainingCount>();
+        hoge.add(o);
+        hoge.add(o2);
         
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(o);
+            String json = objectMapper.writeValueAsString(hoge);
             response.setBody(json);
             response.setStatusCode(HttpStatus.SC_OK);
         } catch (Exception ex) {
